@@ -168,3 +168,4 @@ cython_debug/
 /artifacts/
 /logs/
 /mlruns/
+ml_pipeline.yaml

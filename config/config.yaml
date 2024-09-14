@@ -1,5 +1,50 @@
 # This file will contain the path's of the required folders
 
+# root : ../../../artifacts
+
+# # data input and output paths
+# data_paths:
+#   root_dir : ../../../artifacts/datasets
+#   source_URL: https://drive.google.com/file/d/1Bxj1dVwh6JoEiUdpP0riS5BfrPh-Llbt/view?usp=sharing
+#   download_folder_path : ../../../artifacts/datasets/raw_downloaded
+#   local_data_file : ../../../artifacts/datasets/raw_redwineq_data.csv
+#   processed_data : ../../../artifacts/datasets/processed_redwineq_data.csv
+
+
+# prepare_model:
+#   root_dir: ../../../artifacts/model
+#   model_file_path : ../../../artifacts/model/trained_model.h5
+
+# data_split:
+#   test_data_filepath : ../../../artifacts/datasets/test_data.csv
+#   train_data_filepath : ../../../artifacts/datasets/train_data.csv
+
+
+
+# root : ../artifacts
+
+# # data input and output paths
+# data_paths:
+#   root_dir : ../artifacts/datasets
+#   source_URL: https://drive.google.com/file/d/1Bxj1dVwh6JoEiUdpP0riS5BfrPh-Llbt/view?usp=sharing
+#   download_folder_path : ../artifacts/datasets/raw_downloaded
+#   local_data_file : ../artifacts/datasets/raw_redwineq_data.csv
+#   processed_data : ../artifacts/datasets/processed_redwineq_data.csv
+
+
+# prepare_model:
+#   root_dir: ../artifacts/model
+#   model_file_path : ../artifacts/model/trained_model.h5
+
+# data_split:
+#   test_data_filepath : ../artifacts/datasets/test_data.csv
+#   train_data_filepath : ../artifacts/datasets/train_data.csv
+
+
+
+
+
+
 root : artifacts
 
 # data input and output paths
@@ -9,3 +54,12 @@ data_paths:
   download_folder_path : artifacts/datasets/raw_downloaded
   local_data_file : artifacts/datasets/raw_redwineq_data.csv
   processed_data : artifacts/datasets/processed_redwineq_data.csv
+
+
+prepare_model:
+  root_dir: artifacts/model
+  model_file_path : artifacts/model/trained_model.h5
+
+data_split:
+  test_data_filepath : artifacts/datasets/test_data.csv
+  train_data_filepath : artifacts/datasets/train_data.csv

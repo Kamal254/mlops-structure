@@ -41,6 +41,7 @@ class Evaluation:
         self.rmse = np.sqrt(mean_squared_error(y_test, y_pred))
         self.mae = mean_absolute_error(y_test, y_pred)
         self.r2 = r2_score(y_test, y_pred)
+        logger.info(f'Here are the Scores of the model score : {self.score}, rmse : {self.rmse}')
 
     def log_into_mlflow(self):
         tracking_url_type_store = urlparse(mlflow.get_tracking_uri()).scheme

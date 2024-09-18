@@ -24,8 +24,8 @@ try:
    prepare_base_model.main()
    logger.info(f">>>>>> stage {STAGE_NAME} completed <<<<<<\n\nx==========x")
 except Exception as e:
-        logger.exception(e)
-        raise e
+    logger.exception(e)
+    raise e
 
 
 
@@ -37,5 +37,5 @@ try:
    model_trainer.main()
    logger.info(f">>>>>> stage {STAGE_NAME} completed <<<<<<\n\nx==========x")
 except Exception as e:
-        logger.exception(e)
-        raise e
+    logger.exception(e)
+    raise e

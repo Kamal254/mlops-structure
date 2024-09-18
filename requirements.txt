@@ -1,5 +1,11 @@
 tensorflow
-pandas 
+scikit-learn
+urllib3
+dataclasses
+pathlib
+sqlalchemy
+pandas
+psycopg2-binary
 gdown
 dvc
 mlflow

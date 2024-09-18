@@ -32,37 +32,44 @@ class DataIngestion:
     def preprocess_data(self, rawdata_filepath) ->str:
         #preprocessing of data will complete by this function
         #Save the preprocessed data into local database
-        processed_data_filepath = self.config.processed_data
-        dataframe = pd.read_csv(rawdata_filepath)
-        logger.info("Dataset Loaded in Dataframe")
-        """
-                Do the Preprocessing Steps Here       
-        
-        """
-
-        logger.info(f"Preprocessing Completed")
-        dataframe.to_csv(processed_data_filepath, index=False)
-        logger.info(f'Processed Data Saved into file {processed_data_filepath}') 
-
-        connection_string = f'postgresql+psycopg2://{self.db_config.db_user}:{self.db_config.db_password}@{self.db_config.db_host}:{self.db_config.db_port}/{self.db_config.db_name}'
-        
-        logger.info(f'connecting to database at {connection_string}')
-
         try:
-            engine = create_engine(connection_string)
+            processed_data_filepath = self.config.processed_data
+            dataframe = pd.read_csv(rawdata_filepath)
+            logger.info(f'Raw Dataset Loaded in Dataframe from {rawdata_filepath}')
+            """
+                    Do the Preprocessing Steps Here       
+            
+            """
+
+            logger.info(f"Preprocessing Completed with Columns : {dataframe.columns}")
+            dataframe.to_csv(processed_data_filepath, index=False)
+            logger.info(f'Processed Data Saved into file {processed_data_filepath}') 
+
+            # connection_string = f'postgresql+psycopg2://{self.db_config.db_user}:{self.db_config.db_password}@{self.db_config.db_host}:{self.db_config.db_port}/{self.db_config.db_name}'
+            
+            # logger.info(f'connecting to database at {connection_string}')
+
+            # try:
+            #     engine = create_engine(connection_string)
+            # except Exception as e:
+            #     raise e
+            
+            # logger.info("connection made to local pgadmin server")
+
+            # preprocessed_data = pd.read_csv(processed_data_filepath)
+            # table_name = 'whine_quality'
+            # preprocessed_data.to_sql(table_name, engine, if_exists='replace', index=False)
+            # logger.info("Successfully created table into Local Database")
         except Exception as e:
             raise e
-        
-        logger.info("connection made to local pgadmin server")
-
-        preprocessed_data = pd.read_csv(processed_data_filepath)
-        table_name = 'whine_quality'
-        preprocessed_data.to_sql(table_name, engine, if_exists='replace', index=False)
-        logger.info("Successfully created table into Local Database")
 
     def transform_data(self) -> str:
         rawdata_filepath = self.config.local_data_file
-        dataframe = pd.read_csv(rawdata_filepath)
+        try:
+            dataframe = pd.read_csv(rawdata_filepath)
+            logger.info(f'raw_data loaded into datafram from path {rawdata_filepath}')
+        except Exception as e:
+            e
         if(not dataframe.empty):
             logger.info(f'preprocessing data ...')
             self.preprocess_data(rawdata_filepath)

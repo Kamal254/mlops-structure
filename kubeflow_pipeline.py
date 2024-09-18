@@ -1,6 +1,6 @@
 import kfp
 from kfp import dsl
-# from kfp.components import create_component_from_func
+from kfp import kubernetes
 from kfp import compiler
 
 from regression import logger
@@ -8,26 +8,33 @@ from regression.pipeline.Stage_01_data_preprocess import DataDownloadPreprocessP
 from regression.pipeline.Stage_02_model_training_pipeline import ModelTrainingPipeline
 from regression.pipeline.Stage_03_model_evaluation_pipeline import ModelEvaluationPipeline
 
-@dsl.component
+@dsl.component(
+        base_image = "kamalxs/mlops-architecture-image:v3"
+)
 def download_data():
+    from regression.pipeline.Stage_01_data_preprocess import DataDownloadPreprocessPipeline
     downloader = DataDownloadPreprocessPipeline()
-    return downloader.main()
+    downloader.main()
 
 
-@dsl.component
+
+@dsl.component(
+    base_image = "kamalxs/mlops-architecture-image:v3"
+)
 def train_model():
+    from regression.pipeline.Stage_02_model_training_pipeline import ModelTrainingPipeline
     trainer = ModelTrainingPipeline()
-    return trainer.main()
+    trainer.main()
+    
 
 
-@dsl.component
+@dsl.component(
+        base_image = "kamalxs/mlops-architecture-image:v3"
+)
 def evaluate_model():
+    from regression.pipeline.Stage_03_model_evaluation_pipeline import ModelEvaluationPipeline
     evaluator = ModelEvaluationPipeline()
-    return evaluator.main()
-
-download_data_op = download_data
-train_model_op = train_model
-evaluate_model_op = evaluate_model
+    evaluator.main()
 
 
 @dsl.pipeline(
@@ -36,9 +43,41 @@ evaluate_model_op = evaluate_model
 )
 
 def ml_pipeline():
-    download_task = download_data_op()
-    training_task = train_model_op()
-    evaluate_task = evaluate_model_op()
+
+    pvc1 = kubernetes.CreatePVC(
+        pvc_name = 'my-pvc',
+        access_modes = ['ReadWriteMany'],
+        size = '2Gi',
+        storage_class_name = 'standard'
+
+    )
+
+    download_task = download_data().set_caching_options(False)
+    kubernetes.mount_pvc(
+        download_task,
+        pvc_name=pvc1.outputs['name'],
+        mount_path='app/artifacts',
+    )
+
+    training_task = train_model().set_caching_options(False)
+    kubernetes.mount_pvc(
+        training_task,
+        pvc_name=pvc1.outputs['name'],
+        mount_path='app/artifacts',
+    )
+
+    evaluate_task = evaluate_model().set_caching_options(False)
+    kubernetes.mount_pvc(
+        evaluate_task,
+        pvc_name=pvc1.outputs['name'],
+        mount_path='app/artifacts',
+    )
+
+
+    training_task.after(download_task)
+    evaluate_task.after(training_task)
 
 if __name__ == '__main__':
-    compiler.Compiler().compile(ml_pipeline, 'ml_pipeline.yaml')
+    compiler.Compiler().compile(ml_pipeline, 'kfp_test1_pipeline.yaml')
+
+

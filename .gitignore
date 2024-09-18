@@ -169,3 +169,6 @@ cython_debug/
 /logs/
 /mlruns/
 ml_pipeline.yaml
+# kfp_pipeline.yaml
+kfp_test_pipeline.yaml
+kfp_test1_pipeline.yaml

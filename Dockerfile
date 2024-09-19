@@ -11,4 +11,5 @@ RUN pip install -r /app/requirements.txt
 
 
 # Set PYTHONPATH to make sure all modules are available
-ENV PYTHONPATH="${PYTHONPATH}:/app"
+# ENV PYTHONPATH="${PYTHONPATH}:/app"
+ENV PYTHONPATH="/app:${PYTHONPATH}"

@@ -1,18 +1,18 @@
-tensorflow
+# tensorflow
 scikit-learn
 urllib3
 dataclasses
 pathlib
-sqlalchemy
+# sqlalchemy
 pandas
-psycopg2-binary
+# psycopg2-binary
 gdown
-dvc
+# dvc
 mlflow
 notebook
 numpy
-matplotlib
-seaborn
+# matplotlib
+# seaborn
 python-box
 pyYAML
 tqdm
@@ -20,7 +20,7 @@ ensure
 joblib
 types-PyYAML
 scipy
-Flask
-Flask-Cors
+# Flask
+# Flask-Cors
 dagshub
 -e .

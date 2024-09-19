@@ -8,10 +8,12 @@ import pandas as pd
 import numpy as np
 from sklearn.metrics import accuracy_score, mean_squared_error, mean_absolute_error, r2_score
 
+import os
 import mlflow
 import mlflow.sklearn
 from urllib.parse import urlparse
 from mlflow.models import infer_signature
+
 
 
 
@@ -44,6 +46,11 @@ class Evaluation:
         logger.info(f'Here are the Scores of the model score : {self.score}, rmse : {self.rmse}')
 
     def log_into_mlflow(self):
+        # dagshub.init(repo_owner='Kamal254', repo_name='mlops-structure', mlflow=True)
+        os.environ['MLFLOW_TRACKING_USERNAME'] = 'Kamal254'
+        os.environ['MLFLOW_TRACKING_PASSWORD'] = '8472dab1925bbdf273a5f943d9c9989669b3062a'
+        remote_server_uri = "https://dagshub.com/Kamal254/mlops-structure.mlflow"
+        mlflow.set_tracking_uri(remote_server_uri)
         tracking_url_type_store = urlparse(mlflow.get_tracking_uri()).scheme
         logger.info("Saving Experiments to the mlflow")
         with mlflow.start_run():
@@ -62,10 +69,7 @@ class Evaluation:
 
             if tracking_url_type_store != "file":
 
-                # Register the model
-                # There are other ways to use the Model Registry, which depends on the use case,
-                # please refer to the doc for more information:
-                # https://mlflow.org/docs/latest/model-registry.html#api-workflow
                 mlflow.sklearn.log_model(self.model, "model", registered_model_name="DescisionClassifier")
             else:
+
                 mlflow.sklearn.log_model(self.model, "model", signature=signature)

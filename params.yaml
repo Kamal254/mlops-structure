@@ -1,2 +1,2 @@
 criterion : entropy # gini
-max_depth : 10
+max_depth : 5

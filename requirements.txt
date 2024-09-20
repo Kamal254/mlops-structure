@@ -23,4 +23,6 @@ scipy
 # Flask
 # Flask-Cors
 dagshub
+kfp
+kfp-kubernetes
 -e .

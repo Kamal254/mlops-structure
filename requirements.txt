@@ -21,8 +21,7 @@ joblib
 types-PyYAML
 scipy
 # Flask
-# Flask-Cors
-#pandas
+# Flask-Core
 dagshub
 kfp
 kfp-kubernetes

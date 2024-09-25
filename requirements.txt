@@ -22,7 +22,6 @@ types-PyYAML
 scipy
 # Flask
 # Flask-Core
-#pandas
 dagshub
 kfp
 kfp-kubernetes
